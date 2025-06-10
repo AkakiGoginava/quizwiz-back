@@ -7,7 +7,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-
 class VerificationController extends Controller
 {
     public function verify($id, $hash): RedirectResponse
