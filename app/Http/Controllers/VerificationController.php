@@ -23,7 +23,9 @@ class VerificationController extends Controller
         $user->setRememberToken(null);
         $user->save();
 
-        return redirect("http://app.local.test:5173/login?verify_id={$id}&verify_hash={$hash}");
+        $frontendUrl = env('FRONTEND_URL');
+ 
+        return redirect("{$frontendUrl}/login?verify_id={$id}&verify_hash={$hash}");
     }
 
     public function verifyEmail(Request $request): JsonResponse
