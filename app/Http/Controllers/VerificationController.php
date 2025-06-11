@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -25,7 +26,7 @@ class VerificationController extends Controller
         return redirect("http://app.local.test:5173/login?verify_id={$id}&verify_hash={$hash}");
     }
 
-    public function verifyEmail(Request $request)
+    public function verifyEmail(Request $request): JsonResponse
     {
         $user = User::findOrFail($request->id);
 
@@ -37,6 +38,6 @@ class VerificationController extends Controller
             $user->markEmailAsVerified();
         }
 
-        return response()->json(['message' => 'Email verified']);
+        return response()->json(['message' => 'Email verified'], 200);
     }
 }

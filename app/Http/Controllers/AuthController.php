@@ -75,15 +75,23 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Logged out successfully',
-        ]);
+        ], 201);
     }
 
-    public function getUser(Request $request): User
+    public function getUser(Request $request): JsonResponse
     {
-        return $request->user();
+        $user = $request->user();
+
+        if (! $user) {
+            return response()->json([
+                'error' => 'Unauthenticated',
+            ], 401);
+        }
+
+        return response()->json($user);
     }
 
-    public function forgotPassword(ForgotPasswordRequest $request)
+    public function forgotPassword(ForgotPasswordRequest $request): JsonResponse
     {
         $attributes = $request->validated();
 
@@ -96,7 +104,7 @@ class AuthController extends Controller
         return response()->json(['message' => __($status)], 422);
     }
 
-    public function resetPassword(ResetPasswordRequest $request)
+    public function resetPassword(ResetPasswordRequest $request): JsonResponse
     {
         $attributes = $request->validated();
 
