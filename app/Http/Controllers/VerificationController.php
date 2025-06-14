@@ -24,7 +24,7 @@ class VerificationController extends Controller
         $user->save();
 
         $frontendUrl = env('FRONTEND_URL');
- 
+
         return redirect("{$frontendUrl}/login?verify_id={$id}&verify_hash={$hash}");
     }
 
