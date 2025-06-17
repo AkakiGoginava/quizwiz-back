@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Category;
 use App\Models\Difficulty;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -16,7 +15,6 @@ return new class extends Migration
             $table->string('title');
             $table->integer('total_users');
             $table->foreignIdFor(Difficulty::class)->constrained('difficulties')->onDelete('cascade');
-            $table->foreignIdFor(Category::class)->constrained('categories')->onDelete('cascade');
             $table->string('image');
         });
     }

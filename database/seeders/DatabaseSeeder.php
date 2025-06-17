@@ -13,7 +13,22 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        Difficulty::factory(6)->create();
+        $difficultyData = [
+            ['Starter', 'images/difficulties/starter.png', '#026AA2'],
+            ['Beginner', 'images/difficulties/beginner.png', '#175CD3'],
+            ['Middle', 'images/difficulties/middle.png', '#6941C6'],
+            ['High', 'images/difficulties/high.png', '#B54708'],
+            ['Very High', 'images/difficulties/very-high.png', '#C11574'],
+            ['Dangerously High', 'images/difficulties/dangerously-high.png', '#C01048'],
+        ];
+
+        foreach ($difficultyData as [$name, $icon, $color]) {
+            Difficulty::create([
+                'name'  => $name,
+                'icon' => $icon,
+                'color' => $color,
+            ]);
+        }
 
         Category::factory(30)->create();
 

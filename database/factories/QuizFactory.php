@@ -19,7 +19,6 @@ class QuizFactory extends Factory
             'title'         => fake()->sentence(3, true),
             'total_users'   => fake()->numberBetween(0, 300),
             'difficulty_id' => Difficulty::query()->inRandomOrder()->value('id') ?? Difficulty::factory()->create()->id,
-            'category_id'   => Category::query()->inRandomOrder()->value('id') ?? Category::factory()->Create()->id,
             'image'         => $image,
         ];
     }
