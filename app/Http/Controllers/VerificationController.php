@@ -4,28 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class VerificationController extends Controller
 {
-    public function verify($id, $hash): RedirectResponse
+    public function verify(): JsonResponse
     {
-        $user = User::findOrFail($id);
-
-        if (! hash_equals((string) $hash, sha1($user->getEmailForVerification()))) {
-            abort(403, 'Invalid verification link.');
-        }
-
-        DB::table('sessions')->where('user_id', $user->id)->delete();
-
-        $user->setRememberToken(null);
-        $user->save();
-
-        $frontendUrl = env('FRONTEND_URL');
- 
-        return redirect("{$frontendUrl}/login?verify_id={$id}&verify_hash={$hash}");
+        return response()->json([
+            'message' => 'This route is used for email verification signature generation only.',
+        ], 200);
     }
 
     public function verifyEmail(Request $request): JsonResponse

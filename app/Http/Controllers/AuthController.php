@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -66,7 +65,7 @@ class AuthController extends Controller
     {
         $user = $request->user();
 
-        Auth::logout();
+        auth('web')->logout();
 
         $user->setRememberToken(null);
         $user->save();
@@ -74,26 +73,10 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        // if (Auth::guard() instanceof \Illuminate\Auth\SessionGuard) {
-        //     Auth::logout();
-
-        //     if ($request->hasSession()) {
-        //         $request->session()->invalidate();
-        //         $request->session()->regenerateToken();
-        //     }
-        // }
-
         if ($user) {
             $user->setRememberToken(null);
             $user->save();
         }
-
-        // if ($user) {
-        //     $user->setRememberToken(Str::random(60));
-        //     $user->save();
-        // }
-
-        // Cookie::queue(Cookie::forget('remember_web_' . sha1('users')));
 
         return response()->json([
             'message' => 'Logged out successfully',
