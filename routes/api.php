@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DifficultyController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\ValidationController;
 use App\Http\Controllers\VerificationController;
@@ -30,6 +32,8 @@ Route::controller(ValidationController::class)->group(function () {
 
 Route::controller(QuizController::class)->name('quiz.')->group(function () {
     Route::get('/quizzes', 'getQuizzes')->name('quizzes');
-    Route::get('/categories', 'getCategories')->name('categories');
-    Route::get('/difficulties', 'getDifficulties')->name('difficulties');
+    Route::get('/quiz/{id}', 'getQuiz')->name('quiz');
 });
+
+Route::get('/categories', [CategoryController::class, 'getCategories'])->name('categories');
+Route::get('/difficulties', [DifficultyController::class, 'getDifficulties'])->name('difficulties');
