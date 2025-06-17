@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
         foreach ($difficultyData as [$name, $icon, $color]) {
             Difficulty::create([
                 'name'  => $name,
-                'icon' => $icon,
+                'icon'  => $icon,
                 'color' => $color,
             ]);
         }

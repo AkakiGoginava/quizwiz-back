@@ -1,8 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\DifficultyController;
+use App\Http\Controllers\InfoController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\ValidationController;
 use App\Http\Controllers\VerificationController;
@@ -35,5 +34,7 @@ Route::controller(QuizController::class)->name('quiz.')->group(function () {
     Route::get('/quiz/{id}', 'getQuiz')->name('quiz');
 });
 
-Route::get('/categories', [CategoryController::class, 'getCategories'])->name('categories');
-Route::get('/difficulties', [DifficultyController::class, 'getDifficulties'])->name('difficulties');
+Route::controller(InfoController::class)->name('quiz.')->group(function () {
+    Route::get('/categories', 'getCategories')->name('categories');
+    Route::get('/difficulties', 'getDifficulties')->name('difficulties');
+});

@@ -93,10 +93,6 @@ class AuthController extends Controller
             ], 401);
         }
 
-        if (is_null($user->image)) {
-            $user->image = asset('images/default-profile.jpg');
-        }
-
         return response()->json($user);
     }
 

@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Notifications\ResetPasswordNotification;
+use App\Notifications\VerifyEmailNotification;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -37,6 +38,13 @@ class User extends Authenticatable implements CanResetPassword, MustVerifyEmail
         ];
     }
 
+    public function getImageAttribute($value)
+    {
+        return $value
+            ? asset($value)
+            : asset('images/default-profile.jpg');
+    }
+
     public function sendPasswordResetNotification($token): void
     {
         $frontendUrl = env('FRONTEND_URL');
@@ -44,5 +52,15 @@ class User extends Authenticatable implements CanResetPassword, MustVerifyEmail
         $url = "{$frontendUrl}/reset-password?token=" . $token . '&email=' . urlencode($this->email);
 
         $this->notify(new ResetPasswordNotification($url));
+    }
+
+    public function sendEmailVerificationNotification(): void
+    {
+        auth('web')->logout();
+
+        $this->setRememberToken(null);
+        $this->save();
+
+        $this->notify(new VerifyEmailNotification);
     }
 }
