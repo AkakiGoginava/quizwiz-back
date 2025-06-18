@@ -25,6 +25,10 @@ class QuizResource extends JsonResource
             ],
             'image'      => asset($this->image),
             'created_at' => $this->created_at,
+            'instructions' => $this->instructions,
+            'description'  => $this->description,
+            'question_count' => $this->questions->count(),
+            'points' => $this->points_count,
         ];
     }
 }

@@ -12,7 +12,8 @@ class QuizController extends Controller
     public function getQuizzes()
     {
         $quizzes = QueryBuilder::for(Quiz::class)
-            ->allowedIncludes(['categories', 'difficulty'])
+            ->with(['categories', 'difficulty', 'questions'])
+            ->withCount('points')
             ->allowedFilters([
                 AllowedFilter::exact('categories.id'),
                 'title',
