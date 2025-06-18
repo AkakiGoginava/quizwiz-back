@@ -31,10 +31,10 @@ Route::controller(ValidationController::class)->group(function () {
 
 Route::controller(QuizController::class)->name('quiz.')->group(function () {
     Route::get('/quizzes', 'getQuizzes')->name('quizzes');
-    Route::get('/quiz/{id}', 'getQuiz')->name('quiz');
+    Route::get('/quizzes/{id}', 'getQuiz')->name('quiz');
 });
 
-Route::controller(InfoController::class)->name('quiz.')->group(function () {
+Route::controller(InfoController::class)->group(function () {
     Route::get('/categories', 'getCategories')->name('categories');
     Route::get('/difficulties', 'getDifficulties')->name('difficulties');
 });
