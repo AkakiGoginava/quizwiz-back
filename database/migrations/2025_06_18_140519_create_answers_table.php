@@ -13,7 +13,7 @@ return new class extends Migration
             $table->id();
             $table->string('description');
             $table->boolean('is_correct');
-            $table->foreignIdFor(Question::class)->constrained("questions")->onDelete('cascade');
+            $table->foreignIdFor(Question::class)->constrained('questions')->onDelete('cascade');
             $table->timestamps();
         });
     }

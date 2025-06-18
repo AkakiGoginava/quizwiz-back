@@ -14,8 +14,8 @@ return new class extends Migration
             $table->id();
             $table->integer('points');
             $table->time('complete_time');
-            $table->foreignIdFor(Quiz::class)->constrained("quizzes")->onDelete("cascade");
-            $table->foreignIdFor(User::class)->constrained("users")->onDelete("cascade");
+            $table->foreignIdFor(Quiz::class)->constrained('quizzes')->onDelete('cascade');
+            $table->foreignIdFor(User::class)->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

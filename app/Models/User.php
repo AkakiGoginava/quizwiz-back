@@ -65,7 +65,8 @@ class User extends Authenticatable implements CanResetPassword, MustVerifyEmail
         $this->notify(new VerifyEmailNotification);
     }
 
-    public function quizzes(): BelongsToMany {
-        return $this->belongsToMany(Quiz::class);
+    public function quizzes(): BelongsToMany
+    {
+        return $this->belongsToMany(Quiz::class)->withPivot('points', 'complete_time', 'created_at');
     }
 }

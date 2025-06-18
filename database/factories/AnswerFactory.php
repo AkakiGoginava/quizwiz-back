@@ -10,7 +10,7 @@ class AnswerFactory extends Factory
     {
         return [
             'description' => fake()->sentence(6),
-            'is_correct' => fake()->boolean(),
+            'is_correct'  => fake()->boolean(),
         ];
     }
 }

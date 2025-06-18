@@ -23,12 +23,12 @@ class QuizResource extends JsonResource
                 'name' => $this->difficulty->name,
                 'icon' => asset($this->difficulty->icon),
             ],
-            'image'      => asset($this->image),
-            'created_at' => $this->created_at,
-            'instructions' => $this->instructions,
-            'description'  => $this->description,
+            'image'          => asset($this->image),
+            'created_at'     => $this->created_at,
+            'instructions'   => $this->instructions,
+            'description'    => $this->description,
             'question_count' => $this->questions->count(),
-            'points' => $this->points_count,
+            'points'         => $this->points_count,
         ];
     }
 }

@@ -12,26 +12,26 @@ class QuestionFactory extends Factory
     {
         return [
             'description' => fake()->sentence(10),
-            'quiz_id' => Quiz::inRandomOrder()->value('id') ?? Quiz::factory(),
+            'quiz_id'     => Quiz::inRandomOrder()->value('id') ?? Quiz::factory(),
         ];
     }
 
     public function configure()
     {
-        return $this->afterCreating((function($question) {
-        Answer::factory()->create([
-            'question_id' => $question->id,
-            'is_correct' => true,
-        ]);
-        
-        Answer::factory()->create([
-            'question_id' => $question->id,
-            'is_correct' => false,
-        ]);
+        return $this->afterCreating((function ($question) {
+            Answer::factory()->create([
+                'question_id' => $question->id,
+                'is_correct'  => true,
+            ]);
 
-        Answer::factory()->count(rand(0, 3))->create([
-            'question_id' => $question->id,
-        ]);
+            Answer::factory()->create([
+                'question_id' => $question->id,
+                'is_correct'  => false,
+            ]);
+
+            Answer::factory()->count(rand(0, 3))->create([
+                'question_id' => $question->id,
+            ]);
         }));
     }
 }

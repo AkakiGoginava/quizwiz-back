@@ -12,7 +12,7 @@ return new class extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
             $table->string('description');
-            $table->foreignIdFor(Quiz::class)->constrained('quizzes')->onDelete("cascade");
+            $table->foreignIdFor(Quiz::class)->constrained('quizzes')->onDelete('cascade');
             $table->timestamps();
         });
     }

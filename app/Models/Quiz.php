@@ -22,15 +22,17 @@ class Quiz extends Model
         return $this->belongsToMany(Category::class);
     }
 
-    public function questions(): HasMany {
+    public function questions(): HasMany
+    {
         return $this->hasMany(Question::class);
     }
 
-    public function users(): BelongsToMany {
+    public function users(): BelongsToMany
+    {
         return $this->belongsToMany(User::class);
     }
 
-    public function points() 
+    public function points()
     {
         return $this->hasManyThrough(
             Answer::class,
