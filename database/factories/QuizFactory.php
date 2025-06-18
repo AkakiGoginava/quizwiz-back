@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Category;
 use App\Models\Difficulty;
+use App\Models\Question;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\File;
 
@@ -19,6 +20,8 @@ class QuizFactory extends Factory
             'title'         => fake()->sentence(3, true),
             'total_users'   => fake()->numberBetween(0, 300),
             'difficulty_id' => Difficulty::query()->inRandomOrder()->value('id') ?? Difficulty::factory()->create()->id,
+            'description'   => fake()->sentence(10),
+            'instructions'  => fake()->sentence(40),
             'image'         => $image,
         ];
     }
@@ -31,8 +34,11 @@ class QuizFactory extends Factory
             }
 
             $categoryIds = Category::inRandomOrder()->take(rand(1, 3))->pluck('id');
-
             $quiz->categories()->attach($categoryIds);
+
+            Question::factory()->count(rand(5, 20))->create([
+                'quiz_id' => $quiz->id,
+            ]);
         });
     }
 }
