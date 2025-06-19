@@ -29,6 +29,7 @@ class QuizResource extends JsonResource
             'description'    => $this->description,
             'question_count' => $this->questions_count,
             'points'         => $this->points_count,
+            'max_time'       => $this->max_time,
 
             'questions' => $this->whenLoaded('questions', function () {
                 return $this->questions->map(function ($question) {
