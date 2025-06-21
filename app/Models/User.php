@@ -9,6 +9,7 @@ use App\Notifications\VerifyEmailNotification;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -62,5 +63,10 @@ class User extends Authenticatable implements CanResetPassword, MustVerifyEmail
         $this->save();
 
         $this->notify(new VerifyEmailNotification);
+    }
+
+    public function quizzes(): BelongsToMany
+    {
+        return $this->belongsToMany(Quiz::class)->withPivot('points', 'complete_time', 'created_at');
     }
 }

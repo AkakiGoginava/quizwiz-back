@@ -10,6 +10,11 @@ class Difficulty extends Model
 {
     use HasFactory;
 
+    public function getIconAttribute($value)
+    {
+        return asset($value);
+    }
+
     public function quizzes(): HasMany
     {
         return $this->hasMany(Quiz::class);

@@ -6,6 +6,7 @@ use App\Http\Requests\ForgotPasswordRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\ResetPasswordRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Auth\Events\Registered;
@@ -85,7 +86,7 @@ class AuthController extends Controller
 
     public function getUser(Request $request): JsonResponse
     {
-        $user = $request->user();
+        $user = $request->user()->load('quizzes');
 
         if (! $user) {
             return response()->json([
@@ -93,7 +94,7 @@ class AuthController extends Controller
             ], 401);
         }
 
-        return response()->json($user);
+        return response()->json(new UserResource($user));
     }
 
     public function forgotPassword(ForgotPasswordRequest $request): JsonResponse
