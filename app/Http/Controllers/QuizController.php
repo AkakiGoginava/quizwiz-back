@@ -72,7 +72,7 @@ class QuizController extends Controller
             ->exists();
 
         if ($pastAttempt) {
-            return respones()->json(['message' => 'User has already completed this quiz'], 409);
+            return response()->json(['message' => 'User has already completed this quiz'], 409);
         }
 
         $attemptId = DB::table('quiz_attempts')->insertGetId([
