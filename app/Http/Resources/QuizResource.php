@@ -21,10 +21,10 @@ class QuizResource extends JsonResource
             'difficulty' => [
                 'id'    => $this->difficulty->id,
                 'name'  => $this->difficulty->name,
-                'icon'  => asset($this->difficulty->icon),
+                'icon'  => $this->difficulty->icon,
                 'color' => $this->difficulty->color,
             ],
-            'image'          => asset($this->image),
+            'image'          => $this->image,
             'created_at'     => $this->created_at,
             'instructions'   => $this->instructions,
             'description'    => $this->description,

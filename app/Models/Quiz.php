@@ -12,6 +12,11 @@ class Quiz extends Model
 {
     use HasFactory;
 
+    public function getImageAttribute($value)
+    {
+        return asset($value);
+    }
+
     public function difficulty(): BelongsTo
     {
         return $this->belongsTo(Difficulty::class);

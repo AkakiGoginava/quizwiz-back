@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\QuizResource;
+use App\Models\Answer;
 use App\Models\Quiz;
 use App\QueryFilters\MyQuizzesFilter;
 use Carbon\Carbon;
@@ -106,8 +107,7 @@ class QuizController extends Controller
             ->flatten()
             ->all();
 
-        $points = DB::table('answers')
-            ->whereIn('id', $answerIds)
+        $points = Answer::whereIn('id', $answerIds)
             ->where('is_correct', true)
             ->count();
 
