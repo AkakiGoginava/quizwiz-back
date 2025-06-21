@@ -32,6 +32,8 @@ Route::controller(ValidationController::class)->group(function () {
 Route::controller(QuizController::class)->name('quiz.')->group(function () {
     Route::get('/quizzes', 'getQuizzes')->name('quizzes');
     Route::get('/quizzes/{id}', 'getQuiz')->name('quiz');
+    Route::post('/quizzes/{id}/start', 'startQuiz')->name('start');
+    Route::post('/quizzes/{id}/end', 'endQuiz')->name('end');
 });
 
 Route::controller(InfoController::class)->group(function () {

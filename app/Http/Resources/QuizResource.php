@@ -19,9 +19,10 @@ class QuizResource extends JsonResource
                 ];
             }),
             'difficulty' => [
-                'id'   => $this->difficulty->id,
-                'name' => $this->difficulty->name,
-                'icon' => asset($this->difficulty->icon),
+                'id'    => $this->difficulty->id,
+                'name'  => $this->difficulty->name,
+                'icon'  => asset($this->difficulty->icon),
+                'color' => $this->difficulty->color,
             ],
             'image'          => asset($this->image),
             'created_at'     => $this->created_at,
@@ -34,17 +35,18 @@ class QuizResource extends JsonResource
             'questions' => $this->whenLoaded('questions', function () {
                 return $this->questions->map(function ($question) {
                     return [
-                        'id'          => $question->id,
-                        'description' => $question->description,
-                        'answers'     => $question->answers->map(function ($answer) {
+                        'id'                   => $question->id,
+                        'description'          => $question->description,
+                        'correct_answer_count' => $question->answers->where('is_correct', true)->count(),
+                        'answers'              => $question->answers->map(function ($answer) {
                             return [
                                 'id'          => $answer->id,
                                 'description' => $answer->description,
-                                'is_correct'  => $answer->is_correct,
                             ];
                         }),
                     ];
                 });
+
             }),
         ];
     }
