@@ -22,7 +22,7 @@ class QuizFactory extends Factory
             'difficulty_id' => Difficulty::query()->inRandomOrder()->value('id') ?? Difficulty::factory()->create()->id,
             'description'   => fake()->sentence(10),
             'instructions'  => fake()->sentence(40),
-            'max_time'      => sprintf('00:%02d:00', fake()->numberBetween(5, 15)),
+            'max_time'      => fake()->numberBetween(300, 900),
             'image'         => $image,
         ];
     }
