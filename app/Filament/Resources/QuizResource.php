@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\QuizResource\Pages;
 use App\Filament\Resources\QuizResource\RelationManagers;
+use App\Filament\Resources\Schemas\AnswerRepeaterSchema;
 use App\Models\Quiz;
 use Closure;
 use Filament\Forms;
@@ -63,29 +64,15 @@ class QuizResource extends Resource
                             ->maxLength(255),
                         Forms\Components\Repeater::make('answers')
                             ->relationship('answers')
-                            ->schema([
-                                Forms\Components\TextInput::make('description')
-                                    ->required()
-                                    ->maxLength(255),
-                                Forms\Components\Toggle::make('is_correct')
-                                    ->label('Correct Answer')
-                                    ->required(),
-                            ])
+                            ->schema(AnswerRepeaterSchema::schema())
+                            ->rules(AnswerRepeaterSchema::rules())
                             ->collapsed()
-                            ->rules([fn (Get $get): Closure => function (string $attribute, $value, Closure $fail) use ($get) {
-                                $answers = $get('answers') ?? [];
-
-                                $hasCorrect = collect($answers)->where('is_correct', true)->count() > 0;
-                                $hasWrong = collect($answers)->where('is_correct', false)->count() > 0;
-
-                                if (! $hasCorrect || ! $hasWrong) {
-                                    $fail('Each question must have at least one correct and one wrong answer.');
-                                }
-                            }])
+                            ->itemLabel(fn ($state) => $state['description'] ?? 'Answer')
                             ->minItems(2)
                             ->required(),
                     ])
                     ->collapsed()
+                    ->itemLabel(fn ($state) => $state['description'] ?? 'Question')
                     ->columnSpan(2)
                     ->required(),
             ]);
