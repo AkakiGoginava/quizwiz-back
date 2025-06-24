@@ -13,7 +13,7 @@ class Quiz extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = ['title', 'total_users', 'difficulty_id', 'image', 'description', 'instructions', 'max_time'];
 
     public function getImageAttribute($value)
     {

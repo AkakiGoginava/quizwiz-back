@@ -99,9 +99,6 @@ class QuizResource extends Resource
                 Tables\Columns\ImageColumn::make('image'),
                 Tables\Columns\TextColumn::make('max_time')->formatStateUsing(fn ($state) => gmdate('i:s', $state)),
             ])
-            ->filters([
-                //
-            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])

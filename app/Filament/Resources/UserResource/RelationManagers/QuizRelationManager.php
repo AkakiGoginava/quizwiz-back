@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\UserResource\RelationManagers;
 
+use App\Rules\MaxQuizPoints;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -20,18 +21,7 @@ class QuizRelationManager extends RelationManager
                 ->required()
                 ->numeric()
                 ->minValue(0)
-                ->maxValue(function ($record) {
-                    if (! $record) {
-                        return null;
-                    }
-
-                    return $record->questions()
-                        ->withCount(['answers as correct_count' => function ($query) {
-                            $query->where('is_correct', true);
-                        }])
-                        ->get()
-                        ->sum('correct_count');
-                }),
+                ->rule(fn ($get) => new MaxQuizPoints($get('quiz_id'))),
             Forms\Components\TextInput::make('complete_time')
                 ->required()
                 ->numeric()
@@ -59,9 +49,6 @@ class QuizRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('pivot.points')->label('Points'),
                 Tables\Columns\TextColumn::make('pivot.complete_time')->formatStateUsing(fn ($state) => gmdate('i:s', $state))->label('Complete Time'),
                 Tables\Columns\TextColumn::make('pivot.created_at')->label('Completed At'),
-            ])
-            ->filters([
-                //
             ])
             ->headerActions([
                 Tables\Actions\AttachAction::make()

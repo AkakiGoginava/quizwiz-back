@@ -10,7 +10,7 @@ class Difficulty extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = ['name', 'icon', 'color'];
 
     public function getIconAttribute($value)
     {

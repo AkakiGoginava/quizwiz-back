@@ -10,7 +10,7 @@ class Answer extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = ['description', 'is_correct'];
 
     public function answer(): BelongsTo
     {

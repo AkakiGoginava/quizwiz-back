@@ -54,9 +54,6 @@ class DifficultyResource extends Resource
                 Tables\Columns\ColorColumn::make('color')
                     ->searchable(),
             ])
-            ->filters([
-                //
-            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
@@ -65,13 +62,6 @@ class DifficultyResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
     }
 
     public static function getPages(): array

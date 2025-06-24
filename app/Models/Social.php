@@ -9,5 +9,5 @@ class Social extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = ['key', 'value'];
 }
