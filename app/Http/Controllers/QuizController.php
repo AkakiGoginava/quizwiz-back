@@ -119,7 +119,7 @@ class QuizController extends Controller
 
             DB::table('quiz_user')->insert([
                 'points'        => $points,
-                'complete_time' => gmdate('H:i:s', $diffInSeconds),
+                'complete_time' => $diffInSeconds,
                 'quiz_id'       => $quiz->id,
                 'user_id'       => $user->id,
                 'created_at'    => now(),
