@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Filament\Resources\Schemas;
 
 use Closure;
@@ -31,7 +32,7 @@ class AnswerRepeaterSchema
                 if (! $hasCorrect || ! $hasWrong) {
                     $fail('Each question must have at least one correct and one wrong answer.');
                 }
-            }
+            },
         ];
     }
 }

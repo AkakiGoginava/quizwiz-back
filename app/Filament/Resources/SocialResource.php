@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\SocialResource\Pages;
-use App\Filament\Resources\SocialResource\RelationManagers;
 use App\Models\Social;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SocialResource extends Resource
 {
@@ -72,9 +69,9 @@ class SocialResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSocials::route('/'),
+            'index'  => Pages\ListSocials::route('/'),
             'create' => Pages\CreateSocial::route('/create'),
-            'edit' => Pages\EditSocial::route('/{record}/edit'),
+            'edit'   => Pages\EditSocial::route('/{record}/edit'),
         ];
     }
 }
