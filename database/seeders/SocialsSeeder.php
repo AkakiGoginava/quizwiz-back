@@ -17,7 +17,7 @@ class SocialsSeeder extends Seeder
         ];
 
         foreach ($socialsDefault as $data) {
-            Social::factory()->create($data);
+            Social::create($data);
         }
     }
 }
