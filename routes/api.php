@@ -39,4 +39,5 @@ Route::controller(QuizController::class)->name('quiz.')->group(function () {
 Route::controller(InfoController::class)->group(function () {
     Route::get('/categories', 'getCategories')->name('categories');
     Route::get('/difficulties', 'getDifficulties')->name('difficulties');
+    Route::get('/socials', 'getSocials')->name('socials');
 });

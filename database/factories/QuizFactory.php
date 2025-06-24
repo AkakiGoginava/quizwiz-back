@@ -37,7 +37,7 @@ class QuizFactory extends Factory
             $categoryIds = Category::inRandomOrder()->take(rand(1, 3))->pluck('id');
             $quiz->categories()->attach($categoryIds);
 
-            Question::factory()->count(rand(5, 20))->create([
+            Question::factory()->count(rand(5, 15))->create([
                 'quiz_id' => $quiz->id,
             ]);
         });
