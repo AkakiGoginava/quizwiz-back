@@ -10,6 +10,8 @@ class Difficulty extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'icon', 'color'];
+
     public function getIconAttribute($value)
     {
         return asset($value);

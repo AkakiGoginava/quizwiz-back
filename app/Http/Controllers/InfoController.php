@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Difficulty;
+use App\Models\Social;
 
 class InfoController extends Controller
 {
@@ -16,5 +17,10 @@ class InfoController extends Controller
     public function getCategories()
     {
         return Category::select(['id', 'name'])->get();
+    }
+
+    public function getSocials()
+    {
+        return Social::all();
     }
 }

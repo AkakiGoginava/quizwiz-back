@@ -6,7 +6,6 @@ use App\Models\Category;
 use App\Models\Difficulty;
 use App\Models\Quiz;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -32,7 +31,7 @@ class DatabaseSeeder extends Seeder
 
         Category::factory(30)->create();
 
-        Quiz::factory(30)->create();
+        Quiz::factory(50)->create();
 
         User::factory()->create([
             'name'  => 'Test User',

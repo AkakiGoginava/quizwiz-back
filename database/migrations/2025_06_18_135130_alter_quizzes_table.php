@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::table('quizzes', function (Blueprint $table) {
             $table->text('description');
             $table->text('instructions');
-            $table->time('max_time');
+            $table->integer('max_time')->default(0);
         });
     }
 

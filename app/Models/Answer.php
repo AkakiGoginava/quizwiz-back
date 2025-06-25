@@ -10,6 +10,8 @@ class Answer extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['description', 'is_correct'];
+
     public function answer(): BelongsTo
     {
         return $this->belongsTo(Question::class);

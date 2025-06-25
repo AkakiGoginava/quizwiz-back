@@ -22,7 +22,7 @@ class QuizFactory extends Factory
             'difficulty_id' => Difficulty::query()->inRandomOrder()->value('id') ?? Difficulty::factory()->create()->id,
             'description'   => fake()->sentence(10),
             'instructions'  => fake()->sentence(40),
-            'max_time'      => sprintf('00:%02d:00', fake()->numberBetween(5, 15)),
+            'max_time'      => fake()->numberBetween(300, 900),
             'image'         => $image,
         ];
     }
@@ -37,7 +37,7 @@ class QuizFactory extends Factory
             $categoryIds = Category::inRandomOrder()->take(rand(1, 3))->pluck('id');
             $quiz->categories()->attach($categoryIds);
 
-            Question::factory()->count(rand(5, 20))->create([
+            Question::factory()->count(rand(5, 15))->create([
                 'quiz_id' => $quiz->id,
             ]);
         });
