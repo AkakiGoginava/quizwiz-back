@@ -8,6 +8,7 @@ use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Exception;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
@@ -24,18 +25,25 @@ class AuthController extends Controller
     {
         $attributes = $request->validated();
 
-        $user = User::create([
-            'name'     => $attributes['name'],
-            'email'    => $attributes['email'],
-            'password' => $attributes['password'],
-        ]);
+        try {
+            $user = User::create([
+                'name'     => $attributes['name'],
+                'email'    => $attributes['email'],
+                'password' => $attributes['password'],
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Could not register user, make sure to use unique name and email',
+                'error'   => $e->getMessage(),
+            ], 422);
+        }
 
         Auth::login($user);
 
         event(new Registered($user));
 
         return response()->json([
-            'message' => 'Registration successful',
+            'message' => 'You successfully created profile on quizwiz platform. enjoy!',
             'user'    => $user,
         ], 200);
     }
@@ -53,12 +61,16 @@ class AuthController extends Controller
             $request->session()->regenerate();
 
             return response()->json([
-                'message' => 'Login successful',
+                'message' => 'You have logged in successfully. Welcome back!',
             ], 201);
         }
 
         return response()->json([
-            'message' => 'Invalid credentials',
+            'message' => 'Credentials you provided do not match our records',
+            'errors'  => [
+                'email'    => ['Invalid credentials.'],
+                'password' => ['Invalid credentials.'],
+            ],
         ], 401);
     }
 
@@ -80,7 +92,7 @@ class AuthController extends Controller
         }
 
         return response()->json([
-            'message' => 'Logged out successfully',
+            'message' => 'Logged out successfully, see you later!',
         ], 201);
     }
 
@@ -132,5 +144,24 @@ class AuthController extends Controller
         }
 
         return response()->json(['message' => __($status)], 422);
+    }
+
+    public function checkPasswordToken(): JsonResponse
+    {
+        $token = request('token');
+        $email = request('email');
+
+        $user = User::where('email', $email)->first();
+
+        if (! $user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        $broker = Password::broker();
+        if (! $broker->tokenExists($user, $token)) {
+            return response()->json(['message' => 'Your password reset token has expired, please try again.'], 422);
+        }
+
+        return response()->json(['message' => 'Token is valid.'], 200);
     }
 }

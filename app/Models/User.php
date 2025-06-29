@@ -6,12 +6,14 @@ namespace App\Models;
 
 use App\Notifications\ResetPasswordNotification;
 use App\Notifications\VerifyEmailNotification;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements CanResetPassword, MustVerifyEmail
@@ -53,12 +55,14 @@ class User extends Authenticatable implements CanResetPassword, MustVerifyEmail
 
     public function sendEmailVerificationNotification(): void
     {
-        auth('web')->logout();
+        $token = Str::random(64);
+        EmailVerificationToken::create([
+            'user_id'    => $this->id,
+            'token'      => $token,
+            'expires_at' => Carbon::now()->addMinutes(120),
+        ]);
 
-        $this->setRememberToken(null);
-        $this->save();
-
-        $this->notify(new VerifyEmailNotification);
+        $this->notify(new VerifyEmailNotification($token));
     }
 
     public function quizzes(): BelongsToMany

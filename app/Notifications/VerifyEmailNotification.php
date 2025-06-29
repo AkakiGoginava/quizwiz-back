@@ -5,12 +5,17 @@ namespace App\Notifications;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\URL;
 
 class VerifyEmailNotification extends VerifyEmail
 {
     use Queueable;
+
+    protected $token;
+
+    public function __construct($token)
+    {
+        $this->token = $token;
+    }
 
     public function toMail($notifiable)
     {
@@ -33,21 +38,6 @@ class VerifyEmailNotification extends VerifyEmail
     {
         $frontendUrl = env('FRONTEND_URL');
 
-        $signedUrl = URL::temporarySignedRoute(
-            'verification.verify',
-            Carbon::now()->addMinutes(120),
-            [
-                'id'   => $notifiable->getKey(),
-                'hash' => sha1($notifiable->getEmailForVerification()),
-            ]
-        );
-
-        $parsed = parse_url($signedUrl);
-        parse_str($parsed['query'] ?? '', $params);
-
-        $verifyId = $params['id'] ?? '';
-        $verifyHash = $params['hash'] ?? '';
-
-        return "{$frontendUrl}/login?verify_id={$verifyId}&verify_hash={$verifyHash}";
+        return "{$frontendUrl}/login?token={$this->token}";
     }
 }
