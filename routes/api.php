@@ -30,11 +30,11 @@ Route::controller(ValidationController::class)->group(function () {
     Route::get('/check-unique', 'checkUnique')->name('checkUnique');
 });
 
-Route::controller(QuizController::class)->name('quiz.')->group(function () {
-    Route::get('/quizzes', 'getQuizzes')->name('quizzes');
-    Route::get('/quizzes/{id}', 'getQuiz')->name('quiz');
-    Route::post('/quizzes/{id}/start', 'startQuiz')->name('start');
-    Route::post('/quizzes/{id}/end', 'endQuiz')->name('end');
+Route::controller(QuizController::class)->prefix('/quizzes')->name('quiz.')->group(function () {
+    Route::get('/', 'getQuizzes')->name('quizzes');
+    Route::get('/{id}', 'getQuiz')->name('quiz');
+    Route::post('/{id}/start', 'startQuiz')->name('start');
+    Route::post('/{id}/end', 'endQuiz')->name('end');
 });
 
 Route::controller(InfoController::class)->group(function () {

@@ -66,7 +66,7 @@ class QuizController extends Controller
     public function startQuiz($id): JsonResponse
     {
         $user = Auth::user();
-        
+
         $pastAttempt = DB::table('quiz_user')
             ->where('quiz_id', $id)
             ->where('user_id', $user?->id)
