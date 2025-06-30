@@ -6,7 +6,7 @@ use Closure;
 use Filament\Forms;
 use Filament\Forms\Get;
 
-class AnswerRepeaterSchema
+class AnswerFormSchema
 {
     public static function schema(): array
     {

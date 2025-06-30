@@ -13,6 +13,7 @@ Route::controller(AuthController::class)->group(function () {
         Route::post('/login', 'login')->name('login');
         Route::post('/forgot-password', 'forgotPassword')->name('password.email');
         Route::post('/reset-password', 'resetPassword')->name('password.update');
+        Route::post('/check-password-token', 'checkPasswordToken')->name('password.checkToken');
     });
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('/logout', 'logout')->name('logout');
@@ -20,24 +21,25 @@ Route::controller(AuthController::class)->group(function () {
     });
 });
 
-Route::controller(VerificationController::class)->name('verification')->group(function () {
-    Route::get('/email/verify/{id}/{hash}', 'verify')->middleware('signed')->name('.verify');
-    Route::post('/email/verify', 'verifyEmail')->middleware(['auth:sanctum', 'throttle:6,1'])->name('.verifyEmail');
+Route::controller(VerificationController::class)->prefix('/email')->name('verification')->group(function () {
+    Route::post('/verify', 'verifyEmail')->middleware(['auth:sanctum', 'throttle:6,1'])->name('.verifyEmail');
+    Route::post('/check-verify-token', 'checkVerifyToken')->name('.checkVerifyToken');
 });
 
 Route::controller(ValidationController::class)->group(function () {
     Route::get('/check-unique', 'checkUnique')->name('checkUnique');
 });
 
-Route::controller(QuizController::class)->name('quiz.')->group(function () {
-    Route::get('/quizzes', 'getQuizzes')->name('quizzes');
-    Route::get('/quizzes/{id}', 'getQuiz')->name('quiz');
-    Route::post('/quizzes/{id}/start', 'startQuiz')->name('start');
-    Route::post('/quizzes/{id}/end', 'endQuiz')->name('end');
+Route::controller(QuizController::class)->prefix('/quizzes')->name('quiz.')->group(function () {
+    Route::get('/', 'getQuizzes')->name('quizzes');
+    Route::get('/{id}', 'getQuiz')->name('quiz');
+    Route::post('/{id}/start', 'startQuiz')->name('start');
+    Route::post('/{id}/end', 'endQuiz')->name('end');
 });
 
 Route::controller(InfoController::class)->group(function () {
     Route::get('/categories', 'getCategories')->name('categories');
     Route::get('/difficulties', 'getDifficulties')->name('difficulties');
     Route::get('/socials', 'getSocials')->name('socials');
+    Route::get('/landing-info', 'getLandingInfo')->name('landingInfo');
 });

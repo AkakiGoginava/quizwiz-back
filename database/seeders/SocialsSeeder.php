@@ -11,7 +11,7 @@ class SocialsSeeder extends Seeder
     {
         $socialsDefault = [
             ['key' => 'email',     'value' => 'info@example.com'],
-            ['key' => 'phone',     'value' => '+123456789'],
+            ['key' => 'tel',     'value' => '+123456789'],
             ['key' => 'facebook',  'value' => 'https://fb.com'],
             ['key' => 'linkedin', 'value' => 'https://linkedin.com'],
         ];

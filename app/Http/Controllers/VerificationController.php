@@ -2,31 +2,59 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EmailVerificationToken;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class VerificationController extends Controller
 {
-    public function verify(): JsonResponse
+    public function verifyEmail(): JsonResponse
     {
-        return response()->json([
-            'message' => 'This route is used for email verification signature generation only.',
-        ], 200);
-    }
+        $token = request('token');
 
-    public function verifyEmail(Request $request): JsonResponse
-    {
-        $user = User::findOrFail($request->id);
+        $record = EmailVerificationToken::where('token', $token)
+            ->where('expires_at', '>', Carbon::now())
+            ->first();
 
-        if (! hash_equals((string) $request->hash, sha1($user->getEmailForVerification()))) {
-            abort(403, 'Invalid verification link.');
+        if (! $record) {
+            return response()->json(['message' => 'Your email verification token has expired or you are already verified.'], 422);
         }
 
-        if (! $user->hasVerifiedEmail()) {
-            $user->markEmailAsVerified();
+        $user = User::find($record->user_id);
+
+        if (! $user) {
+            return response()->json(['message' => 'User not found.'], 404);
         }
+
+        if ($user->hasVerifiedEmail()) {
+            return response()->json(['message' => 'Email already verified'], 409);
+        }
+
+        $user->markEmailAsVerified();
+        $record->delete();
 
         return response()->json(['message' => 'Email verified'], 200);
+    }
+
+    public function checkVerifyToken(): JsonResponse
+    {
+        $token = request('token');
+
+        $record = EmailVerificationToken::where('token', $token)
+            ->where('expires_at', '>', Carbon::now())
+            ->first();
+
+        if (! $record) {
+            return response()->json(['message' => 'Your email verification token has expired, please try again.'], 422);
+        }
+
+        $user = User::find($record->user_id);
+
+        if (! $user) {
+            return response()->json(['message' => 'User not found.'], 404);
+        }
+
+        return response()->json(['message' => 'Verification link is valid.'], 200);
     }
 }
