@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -46,9 +47,12 @@ class User extends Authenticatable implements CanResetPassword, FilamentUser, Mu
 
     public function getImageAttribute($value)
     {
-        return $value
-            ? asset($value)
-            : asset('images/default-profile.jpg');
+        if (! $value) {
+            return asset('images/default-profile.jpg');
+        }
+        return Storage::disk('public')->exists($value)
+            ? asset('storage/' . ltrim($value, '/'))
+            : asset($value);
     }
 
     public function sendPasswordResetNotification($token): void
