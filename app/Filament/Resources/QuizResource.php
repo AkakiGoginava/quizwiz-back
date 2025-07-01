@@ -36,7 +36,9 @@ class QuizResource extends Resource
                     ->required(),
                 Forms\Components\FileUpload::make('image')
                     ->image()
-                    ->required(),
+                    ->nullable()
+                    ->dehydrateStateUsing(fn ($state, $record) => $state ?: $record?->image)
+                    ->required(fn ($livewire) => $livewire instanceof \App\Filament\Resources\QuizResource\Pages\CreateQuiz),
                 Forms\Components\Textarea::make('description')
                     ->required()
                     ->columnSpanFull(),
