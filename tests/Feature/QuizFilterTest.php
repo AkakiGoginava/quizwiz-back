@@ -233,7 +233,7 @@ class QuizFilterTest extends TestCase
             'title'         => 'Alpha',
             'difficulty_id' => $difficultyA->id,
         ]);
-        $quizMatch->categories()->attach($categoryA);
+        $quizMatch->categories()->sync([$categoryA->id]);
         $user->quizzes()->attach($quizMatch->id, [
             'points'        => 10,
             'complete_time' => 100,
@@ -244,7 +244,7 @@ class QuizFilterTest extends TestCase
             'title'         => 'Bravo',
             'difficulty_id' => $difficultyA->id,
         ]);
-        $quizWrongTitle->categories()->attach($categoryA);
+        $quizWrongTitle->categories()->sync([$categoryA->id]);
         $user->quizzes()->attach($quizWrongTitle->id, [
             'points'        => 10,
             'complete_time' => 100,
@@ -255,7 +255,7 @@ class QuizFilterTest extends TestCase
             'title'         => 'Alpha',
             'difficulty_id' => $difficultyA->id,
         ]);
-        $quizWrongCategory->categories()->attach($categoryB);
+        $quizWrongCategory->categories()->sync([$categoryB->id]);
         $user->quizzes()->attach($quizWrongCategory->id, [
             'points'        => 10,
             'complete_time' => 100,
@@ -266,7 +266,7 @@ class QuizFilterTest extends TestCase
             'title'         => 'Alpha',
             'difficulty_id' => $difficultyB->id,
         ]);
-        $quizWrongDifficulty->categories()->attach($categoryA);
+        $quizWrongDifficulty->categories()->sync([$categoryA->id]);
         $user->quizzes()->attach($quizWrongDifficulty->id, [
             'points'        => 10,
             'complete_time' => 100,
@@ -277,7 +277,7 @@ class QuizFilterTest extends TestCase
             'title'         => 'Alpha',
             'difficulty_id' => $difficultyA->id,
         ]);
-        $quizNotCompleted->categories()->attach($categoryA);
+        $quizNotCompleted->categories()->sync([$categoryA->id]);
 
         $this->actingAs($user);
         $url = '/api/quizzes?filter[my_quizzes]=true&filter[categories.id]=' . $categoryA->id . '&filter[title]=Alpha&filter[difficulty_id]=' . $difficultyA->id;
