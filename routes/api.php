@@ -3,7 +3,6 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\InfoController;
 use App\Http\Controllers\QuizController;
-use App\Http\Controllers\ValidationController;
 use App\Http\Controllers\VerificationController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,10 +23,6 @@ Route::controller(AuthController::class)->group(function () {
 Route::controller(VerificationController::class)->prefix('/email')->name('verification')->group(function () {
     Route::post('/verify', 'verifyEmail')->middleware(['auth:sanctum', 'throttle:6,1'])->name('.verifyEmail');
     Route::post('/check-verify-token', 'checkVerifyToken')->name('.checkVerifyToken');
-});
-
-Route::controller(ValidationController::class)->group(function () {
-    Route::get('/check-unique', 'checkUnique')->name('checkUnique');
 });
 
 Route::controller(QuizController::class)->prefix('/quizzes')->name('quiz.')->group(function () {

@@ -24,7 +24,9 @@ class DifficultyResource extends Resource
                 ->maxLength(255),
             Forms\Components\FileUpload::make('icon')
                 ->image()
-                ->required(),
+                ->nullable()
+                ->dehydrateStateUsing(fn ($state, $record) => $state ?: $record?->icon)
+                ->required(fn ($livewire) => $livewire instanceof \App\Filament\Resources\DifficultyResource\Pages\CreateDifficulty),
             Forms\Components\ColorPicker::make('color')
                 ->required(),
         ];

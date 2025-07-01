@@ -30,7 +30,10 @@ class UserResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\FileUpload::make('image')
-                    ->image(),
+                    ->image()
+                    ->nullable()
+                    ->dehydrateStateUsing(fn ($state, $record) => $state ?: $record?->image)
+                    ->required(fn ($livewire) => $livewire instanceof \App\Filament\Resources\UserResource\Pages\CreateUser),
                 Forms\Components\DateTimePicker::make('email_verified_at')
                     ->maxDate(now()),
                 Forms\Components\TextInput::make('password')

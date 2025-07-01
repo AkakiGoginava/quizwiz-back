@@ -4,7 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\QuizResource\Pages;
 use App\Filament\Resources\QuizResource\RelationManagers;
-use App\Filament\Resources\Schemas\AnswerRepeaterSchema;
+use App\Filament\Resources\Schemas\AnswerFormSchema;
 use App\Models\Quiz;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -36,7 +36,9 @@ class QuizResource extends Resource
                     ->required(),
                 Forms\Components\FileUpload::make('image')
                     ->image()
-                    ->required(),
+                    ->nullable()
+                    ->dehydrateStateUsing(fn ($state, $record) => $state ?: $record?->image)
+                    ->required(fn ($livewire) => $livewire instanceof \App\Filament\Resources\QuizResource\Pages\CreateQuiz),
                 Forms\Components\Textarea::make('description')
                     ->required()
                     ->columnSpanFull(),
@@ -62,8 +64,8 @@ class QuizResource extends Resource
                             ->maxLength(255),
                         Forms\Components\Repeater::make('answers')
                             ->relationship('answers')
-                            ->schema(AnswerRepeaterSchema::schema())
-                            ->rules(AnswerRepeaterSchema::rules())
+                            ->schema(AnswerFormSchema::schema())
+                            ->rules(AnswerFormSchema::rules())
                             ->collapsed()
                             ->itemLabel(fn ($state) => $state['description'] ?? 'Answer')
                             ->minItems(2)
