@@ -1,4 +1,4 @@
-<div>
+<div style="background-color: rgb(209, 209, 209); margin: 1rem 0 0 0">
     <style type="text/css">
         @font-face {
             font-family: 'Raleway';
