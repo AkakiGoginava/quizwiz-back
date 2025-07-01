@@ -24,9 +24,14 @@ class DifficultyResource extends Resource
                 ->maxLength(255),
             Forms\Components\FileUpload::make('icon')
                 ->image()
-                ->nullable()
-                ->dehydrateStateUsing(fn ($state, $record) => $state ?: $record?->icon)
-                ->required(fn ($livewire) => $livewire instanceof \App\Filament\Resources\DifficultyResource\Pages\CreateDifficulty),
+                ->multiple(false)
+                ->dehydrateStateUsing(fn ($state, $record) =>
+                    is_array($state)
+                        ? (count($state) > 0 ? array_values($state)[0] : ($record?->icon ?? null))
+                        : ($state ?: ($record?->icon ?? null))
+                )
+                ->required(fn ($livewire) => $livewire instanceof \App\Filament\Resources\DifficultyResource\Pages\CreateDifficulty)
+                ->nullable(fn ($livewire) => $livewire instanceof \App\Filament\Resources\DifficultyResource\Pages\EditDifficulty), 
             Forms\Components\ColorPicker::make('color')
                 ->required(),
         ];
