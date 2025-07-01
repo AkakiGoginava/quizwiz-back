@@ -1,61 +1,170 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# QuizWiz Backend
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+QuizWiz is a Laravel-based backend for a Quizwiz platform, supporting quiz filtering, sorting, user progress tracking, and email notifications.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+-   Filtering and sorting for quizzes (by category, difficulty, title, completion status, etc.)
+-   User quiz completion tracking
+-   RESTful API endpoints for quizzes and user actions
+-   Email notifications with custom HTML/CSS templates (Gmail-compatible)
+-   Unit tests
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Admin Panel (Filament)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+QuizWiz includes an integrated admin panel built with [Filament](https://filamentphp.com/), a modern Laravel admin toolkit.
 
-## Learning Laravel
+-   **Purpose:** Manage quizzes, categories, users, and other resources via a user-friendly web interface.
+-   **Location:** Admin panel code is in `app/Filament/` (resources, pages, widgets, etc.).
+-   **Access:**
+    -   By default, access the admin panel at: `/admin`
+    -   You must be logged in as an admin user
+    -   To create an admin user, run:
+        ```bash
+        php artisan make:filament-user
+        ```
+        When prompted, use an email ending with `@quizwiz.com` (e.g., `admin@quizwiz.com`). Only users with such emails can access the admin panel.
+-   **Customization:**
+    -   Add or modify resources in `app/Filament/Resources/`
+    -   See [Filament documentation](https://filamentphp.com/docs/3.x/admin/resources) for advanced customization
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Tech Stack
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+-   PHP 8.x
+-   Laravel 10.x
+-   MySQL
+-   Composer
+-   PHPUnit
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Project Structure
 
-## Laravel Sponsors
+```
+quizwiz-back-end/
+├── app/
+│   ├── Models/
+│   ├── Http/
+│   ├── Notifications/
+│   └── ..
+├── bootstrap/
+├── config/
+├── database/
+│   ├── migrations/
+│   ├── seeders/
+│   └── factories/
+├── public/
+├── resources/
+│   ├── views/
+│   └── ..
+├── routes/
+├── storage/
+├── tests/
+├── .env.example
+├── composer.json
+├── package.json
+└── README.md
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Project structure is standard for Laravel project
 
-### Premium Partners
+## Database Schema
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+The MySQL database schema for QuizWiz is visualized and maintained using [DrawSQL](https://drawsql.app/).
 
-## Contributing
+You can view the schema diagram here:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+[Database Design Diagram](readme/assets/quizwiz-database-diagram.png)
 
-## Code of Conduct
+## Getting Started
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Prerequisites
 
-## Security Vulnerabilities
+-   PHP >= 8.1
+-   Composer
+-   MySQL
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Installation
 
-## License
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/RedberryInternship/quizwiz-back-akaki-goginava.git
+    cd quizwiz-back-akaki-goginava
+    ```
+2. Install PHP dependencies:
+    ```bash
+    composer install
+    ```
+3. Install JS dependencies:
+    ```bash
+    npm install
+    ```
+4. Build frontend assets:
+    ```bash
+    npm run build
+    ```
+5. Copy the example environment file and configure it:
+    ```bash
+    cp .env.example .env
+    ```
+6. Generate application key:
+    ```bash
+    php artisan key:generate
+    ```
+7. Run migrations and seeders:
+    ```bash
+    php artisan migrate --seed
+    ```
+8. Seed socials table
+    ```bash
+    php artisan db:seed --class=SocialSeeder
+    ```
+9. Link storage:
+    ```bash
+    php artisan storage:link
+    ```
+10. Optimize the application:
+    ```bash
+    php artisan optimize
+    ```
+11. (Optional) Run the development server:
+    ```bash
+    php artisan serve
+    ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Environment Configuration
+
+-   `.env` — main environment file for local/dev
+-   `.env.testing` — used for automated tests
+
+**Important:**
+
+-   Set correct `DB_CONNECTION`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD` in your `.env`.
+-   Configure `MAIL_*` variables for email notifications.
+-   Set `APP_URL` and configure `config/cors.php` for allowed origins.
+
+## Running Tests
+
+Run all tests with:
+
+```bash
+php artisan test
+```
+
+## API Overview
+
+-   All quiz endpoints are under `/api/quizzes`
+-   Supports filtering by:
+    -   `categories.id`
+    -   `difficulty_id`
+    -   `title`
+    -   `my_quizzes` (completed by user)
+-   Supports sorting by:
+    -   `created_at`, `total_users`, `title`
+-   Example:
+    ```
+    GET /api/quizzes?filter[title]=Alpha&filter[categories.id]=1,2&sort=-created_at
+    ```
+
+## Email Templates
+
+-   Located in `resources/views/email/`
+-   Use inline CSS and web-safe fonts for best compatibility
