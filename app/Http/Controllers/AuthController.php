@@ -43,7 +43,7 @@ class AuthController extends Controller
         event(new Registered($user));
 
         return response()->json([
-            'message' => 'You successfully created profile on quizwiz platform. enjoy!',
+            'message' => 'You successfully created profile on quizwiz platform. Please verify your email',
             'user'    => $user,
         ], 200);
     }

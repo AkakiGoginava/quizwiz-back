@@ -1,6 +1,6 @@
 # QuizWiz Backend
 
-QuizWiz is a Laravel-based backend for a Quizwiz platform, supporting quiz filtering, sorting, user progress tracking, and email notifications.
+QuizWiz is a Laravel-based backend for a QuizWiz platform, supporting quiz filtering, sorting, user progress tracking, and email notifications.
 
 ## Features
 
@@ -86,8 +86,8 @@ You can view the schema diagram here:
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/RedberryInternship/quizwiz-back-akaki-goginava.git
-    cd quizwiz-back-akaki-goginava
+    git clone https://github.com/AkakiGoginava/quizwiz-back.git
+    cd quizwiz-back
     ```
 2. Install PHP dependencies:
     ```bash
@@ -115,7 +115,7 @@ You can view the schema diagram here:
     ```
 8. Seed socials table
     ```bash
-    php artisan db:seed --class=SocialSeeder
+    php artisan db:seed --class=SocialsSeeder
     ```
 9. Link storage:
     ```bash
@@ -139,7 +139,9 @@ You can view the schema diagram here:
 
 -   Set correct `DB_CONNECTION`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD` in your `.env`.
 -   Configure `MAIL_*` variables for email notifications.
--   Set `APP_URL` and configure `config/cors.php` for allowed origins.
+-   Set `APP_URL` to configure `config/cors.php` for allowed origins.
+-   Set `SANCTUM_STATEFUL_DOMAINS` to front-end and back-end urls.
+-   Set `SESSION_DOMAIN` to top-level domain.
 
 ## Running Tests
 
